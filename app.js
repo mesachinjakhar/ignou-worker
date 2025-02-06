@@ -1,5 +1,6 @@
 const express = require("express");
 const emailWorker = require("./worker/emailWorker");
+require("dotenv").config();
 
 const app = express();
 
@@ -9,6 +10,6 @@ app.get("/", (req, res) => {
 
 emailWorker();
 
-app.listen(8081, () => {
-  console.log("Server is running on port 8080");
+app.listen(process.env.PORT, () => {
+  console.log("Server is running on port:", process.env.PORT);
 });

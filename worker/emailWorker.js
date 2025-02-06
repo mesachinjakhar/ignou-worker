@@ -1,6 +1,5 @@
 const { Worker } = require("bullmq");
 const sendEmail = require("../utils/sendEmail");
-require("dotenv").config();
 
 function startWorker() {
   const worker = new Worker(
