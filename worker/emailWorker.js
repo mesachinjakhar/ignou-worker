@@ -18,7 +18,7 @@ function startWorker() {
       },
       removeOnComplete: true, // Auto-delete completed jobs
       removeOnFail: {
-        age: 86400, // Keep failed jobs for 24 hours (optional)
+        age: 300, // Keep failed jobs for 24 hours (optional)
       },
     }
   );
