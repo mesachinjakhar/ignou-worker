@@ -6,18 +6,16 @@ function startWorker() {
   const worker = new Worker(
     "emailQueue",
     async (job) => {
+      console.log("worker recieved the job: ", job.data);
       const emailConfig = job.data;
       await sendEmail(emailConfig);
     },
     {
       connection: {
-        host:
-          process.env.REDIS_HOST ||
-          "redis-14453.crce182.ap-south-1-1.ec2.redns.redis-cloud.com",
-        port: process.env.REDIS_PORT || 14453,
-        username: "default",
-        password:
-          process.env.REDIS_PASSWORD || "NkauixLtzRtCoaFdWXySw00g9fDbN83t",
+        url:
+          process.env.NODE_ENV === "development"
+            ? process.env.REDIS_HOST_DEV
+            : process.env.REDIS_HOST_PROD,
       },
     }
   );
