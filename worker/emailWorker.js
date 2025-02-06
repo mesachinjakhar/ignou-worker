@@ -16,6 +16,10 @@ function startWorker() {
             ? process.env.REDIS_URL_PUBLIC
             : process.env.REDIS_URL_INTERNAL,
       },
+      removeOnComplete: true, // Auto-delete completed jobs
+      removeOnFail: {
+        age: 86400, // Keep failed jobs for 24 hours (optional)
+      },
     }
   );
 }
