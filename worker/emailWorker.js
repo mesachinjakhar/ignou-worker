@@ -14,8 +14,8 @@ function startWorker() {
       connection: {
         url:
           process.env.NODE_ENV === "development"
-            ? process.env.REDIS_HOST_DEV
-            : process.env.REDIS_HOST_PROD,
+            ? process.env.REDIS_URL_PUBLIC
+            : process.env.REDIS_URL_INTERNAL,
       },
     }
   );
