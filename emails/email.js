@@ -7,19 +7,18 @@ module.exports.otp = (data) => {
   };
 };
 
-module.exports.orderConfirmationToCust = (orderDetails) => {
+module.exports.orderConfirmationToCust = (data) => {
   return {
     from: '"IGNOU Backbenchers" <orders@mails.ignoubackbenchers.com>', // Sender's name and email
-    to: orderDetails.email,
+    to: data.orderDetails.email,
     subject: "Order Confirmation - IGNOU Backbenchers", // Subject line
     text: `Dear Customer,
 
 Thank you for your order from IGNOU Backbenchers! Your handwritten assignment is now confirmed and is being processed.
 
 Order Details:
-- Order ID: ${orderDetails._id}
-- Programme: ${orderDetails.programme}
-- Expected Delivery: ${formattedDeliveryDate}
+- Order ID: ${data.orderDetails._id}
+- Programme: ${data.orderDetails.programme}
 
 We will notify you once your order is shipped. For any queries, feel free to contact us.
 
@@ -29,24 +28,29 @@ IGNOU Backbenchers
   };
 };
 
-module.exports.orderConfirmationToAdmin = (orderDetails) => {
+module.exports.orderConfirmationToAdmin = (data) => {
   return {
     from: '"IGNOU Backbenchers" <orders@mails.ignoubackbenchers.com>', // Sender's name and email
-    to: process.env.ADMIN_EMAIL,
-    subject: "Order Confirmation - IGNOU Backbenchers", // Subject line
-    text: `Dear Customer,
+    to:
+      process.env.NODE_ENV == "development"
+        ? process.env.DEV_EMAIL
+        : process.env.ADMIN_EMAIL,
+    subject: "New Order Received - IGNOU Backbenchers", // Subject line
+    text: `Dear Admin,
 
-Thank you for your order from IGNOU Backbenchers! Your handwritten assignment is now confirmed and is being processed.
+A new order has been placed on IGNOU Backbenchers.
 
 Order Details:
-- Order ID: ${orderDetails._id}
-- Programme: ${orderDetails.programme}
-- Expected Delivery: ${formattedDeliveryDate}
+- Order ID: ${data.orderDetails._id}
+- Customer Name: ${data.orderDetails.name}
+- Mobile: ${data.orderDetails.mobile}
+- Email: ${data.orderDetails.email}
+- Programme: ${data.orderDetails.programme}
+- Number of Assignments: ${data.orderDetails.numberOfAssignments}
 
-We will notify you once your order is shipped. For any queries, feel free to contact us.
+Please review and process the order at your earliest convenience.
 
 Best Regards,
-IGNOU Backbenchers
-📞 +91 90534 42043`,
+IGNOU Backbenchers`,
   };
 };
